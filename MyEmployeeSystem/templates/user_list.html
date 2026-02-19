@@ -1,0 +1,84 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<div class="container">
+    <h1 class="page-header">员工列表</h1>
+
+    <div style="margin-bottom: 20px" class="clearfix">
+        <a href="/user/add/" class="btn btn-primary" style="float: left;">新建员工</a>
+
+        <form method="get" style="float: right;">
+            <div class="input-group" style="width: 300px;">
+                <input type="text" name="q" class="form-control" placeholder="搜索员工姓名..." value="{{ search_data }}">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit">
+                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span> 搜索
+                    </button>
+                </span>
+            </div>
+        </form>
+        </div>
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>姓名</th>
+            <th>性别</th>
+            <th>密码</th>
+            <th>年龄</th>
+            <th>余额</th>
+            <th>入职时间</th>
+            <th>所属部门</th> <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for obj in page_obj %}
+            <tr>
+                <td>{{ page_obj.start_index|add:forloop.counter0 }}</td>
+                <td>{{ obj.name }}</td>
+
+                <td>{{ obj.get_gender_display }}</td>
+
+                <td>{{ obj.password }}</td>
+                <td>{{ obj.age }}</td>
+                <td>{{ obj.account }}</td>
+
+                <td>{{ obj.create_time|date:"Y-m-d" }}</td>
+
+                <td>{{ obj.depart.title }}</td>
+
+                <td>
+                    <a class="btn btn-primary btn-xs" href="/user/{{ obj.id }}/edit/?page={{ page_string}}">编辑</a>
+                    <a class="btn btn-danger btn-xs" href="/user/{{ obj.id }}/delete/">删除</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <nav aria-label="Page navigation" class="text-center">
+      <ul class="pagination">
+
+        {% if page_obj.has_previous %}
+            <li>
+                <a href="?q={{ search_data }}&page={{ page_obj.previous_page_number }}">上一页</a>
+            </li>
+        {% endif %}
+
+        {% for num in page_obj.paginator.page_range %}
+            {% if num == page_obj.number %}
+                <li class="active"><a href="?q={{ search_data }}&page={{ num }}">{{ num }}</a></li>
+            {% else %}
+                <li><a href="?q={{ search_data }}&page={{ num }}">{{ num }}</a></li>
+            {% endif %}
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+            <li>
+                <a href="?q={{ search_data }}&page={{ page_obj.next_page_number }}">下一页</a>
+            </li>
+        {% endif %}
+
+      </ul>
+    </nav>
+</div>
+{% endblock %}

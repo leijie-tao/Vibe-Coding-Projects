@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>系统登录</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <style>
+        /* 1. 给整个背景加上高级的紫蓝色渐变 */
+        body {
+
+            height: 100vh; /* 撑满整个屏幕高度 */
+            display: flex; /* 使用弹性盒子模型 */
+            align-items: center; /* 垂直居中 */
+            justify-content: center; /* 水平居中 */
+            margin: 0;
+        }
+        /* 2. 登录卡片的设计：纯白背景、圆角、高级阴影 */
+        .login-card {
+            background: white;
+            padding: 40px 50px;
+            border-radius: 15px; /* 圆角 */
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2); /* 悬浮阴影 */
+            width: 420px;
+        }
+        .login-card h2 {
+            margin-bottom: 30px;
+            font-weight: bold;
+            color: #34495e;
+            letter-spacing: 2px;
+        }
+        /* 3. 自定义按钮颜色以搭配背景 */
+        .btn-custom {
+            background-color: #34495e;
+            color: white;
+            border: none;
+            border-radius: 25px; /* 胶囊按钮 */
+            transition: all 0.3s; /* 增加动画过渡效果 */
+        }
+        .btn-custom:hover {
+            background-color: #5f3a85; /* 鼠标悬停变深 */
+            color: white;
+            transform: translateY(-2px); /* 鼠标悬停微微上浮 */
+            box-shadow: 0 5px 15px rgba(118, 75, 162, 0.4);
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-card">
+    <h2 class="text-center">企业管理系统</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label>用户名</label>
+            <input type="text" class="form-control input-lg" name="username" placeholder="请输入用户名">
+        </div>
+        <div class="form-group">
+            <label>密码</label>
+            <input type="password" class="form-control input-lg" name="password" placeholder="请输入密码">
+        </div>
+
+        <span style="color: red; font-size: 14px;">{{ error_msg }}</span>
+
+        <button type="submit" class="btn btn-custom btn-block btn-lg" style="margin-top: 25px;">登 录</button>
+    </form>
+</div>
+
+</body>
+</html>

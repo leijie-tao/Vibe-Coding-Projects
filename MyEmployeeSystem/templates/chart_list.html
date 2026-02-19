@@ -1,0 +1,128 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="container">
+
+    <div class="panel panel-default">
+      <div class="panel-heading">各部门人数统计（柱状图）</div>
+      <div class="panel-body">
+        <div id="m1" style="width: 100%; height:400px;"></div>
+      </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="panel panel-default">
+              <div class="panel-heading">入职人数趋势（折线图）</div>
+              <div class="panel-body">
+                <div id="m2" style="width: 100%; height:350px;"></div>
+              </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="panel panel-default">
+              <div class="panel-heading">员工年龄分布（饼图）</div>
+              <div class="panel-body">
+                <div id="m3" style="width: 100%; height:350px;"></div>
+              </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+
+<script>
+    // 页面加载完成后，依次执行这三个画图函数
+    $(function () {
+        initBar();
+        initLine();
+        initPie();
+    });
+
+    // 1. 柱状图 (保持你原来的不变)
+    function initBar() {
+        var myChart = echarts.init(document.getElementById('m1'));
+        $.ajax({
+            url: "/chart/bar/",
+            type: "get",
+            dataType: "JSON",
+            success: function (res) {
+                if (res.status) {
+                    var option = {
+                        title: { text: '各部门员工人数统计' },
+                        tooltip: {},
+                        legend: { data: res.data.legend },
+                        xAxis: { data: res.data.x_axis },
+                        yAxis: {},
+                        series: res.data.series_list
+                    };
+                    myChart.setOption(option);
+                }
+            }
+        });
+    }
+
+    // 2. 新增：折线图
+    function initLine() {
+        var myChart = echarts.init(document.getElementById('m2'));
+        $.ajax({
+            url: "/chart/line/",
+            type: "get",
+            dataType: "JSON",
+            success: function (res) {
+                if (res.status) {
+                    var option = {
+                        tooltip: { trigger: 'axis' },
+                        xAxis: { type: 'category', data: res.data.x_axis },
+                        yAxis: { type: 'value' },
+                        series: [{
+                            data: res.data.series_data,
+                            type: 'line',
+                            smooth: true  // 开启平滑曲线，让折线看起来更高级
+                        }]
+                    };
+                    myChart.setOption(option);
+                }
+            }
+        });
+    }
+
+    // 3. 新增：饼图
+    function initPie() {
+        var myChart = echarts.init(document.getElementById('m3'));
+        $.ajax({
+            url: "/chart/pie/",
+            type: "get",
+            dataType: "JSON",
+            success: function (res) {
+                if (res.status) {
+                    var option = {
+                        tooltip: { trigger: 'item' },
+                        legend: { top: 'bottom' }, // 图例放在最下面
+                        series: [
+                            {
+                                name: '年龄分布',
+                                type: 'pie',
+                                radius: '60%', // 饼图的大小
+                                data: res.data,
+                                emphasis: {
+                                    itemStyle: {
+                                        shadowBlur: 10,
+                                        shadowOffsetX: 0,
+                                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                    }
+                                }
+                            }
+                        ]
+                    };
+                    myChart.setOption(option);
+                }
+            }
+        });
+    }
+</script>
+{% endblock %}

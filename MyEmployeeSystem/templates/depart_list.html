@@ -1,0 +1,28 @@
+{% extends 'layout.html' %}  {% block content %}          <div class="container">
+    <h1 class="page-header">部门列表</h1>
+    <div style="margin-bottom: 20px">
+        <a href="/depart/add/" class="btn btn-primary">新建部门</a>
+    </div>
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>部门名称</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for obj in departments %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ obj.title }}</td>
+                <td>
+                    <a class="btn btn-primary btn-xs" href="/depart/{{ obj.id }}/edit/">编辑</a>
+                    <a class="btn btn-danger btn-xs" href="/depart/delete/?nid={{ obj.id }}">删除</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
