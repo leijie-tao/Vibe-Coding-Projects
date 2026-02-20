@@ -1,11 +1,9 @@
 # Vibe-Coding-Projects
 ## Use AI to complete some projects.
-### MyEmployeeSystem: Python + Django + MySQL + Bootstrap
-# 🏢 Enterprise Data Management System
-
+## Projet 1: MyEmployeeSystem: Python + Django + MySQL + Bootstrap
 A robust, full-stack enterprise administration dashboard built with **Python 3** and **Django**. This project features a complete employee/department data flow, secure authentication, and a dynamic data visualization dashboard to support digital resource management.
 
-## ✨ Key Features
+### ✨ Key Features
 
 * **🔒 Security & Authentication**
     * **Session-based Authentication**: Secure administrator login system.
@@ -26,13 +24,13 @@ A robust, full-stack enterprise administration dashboard built with **Python 3**
         * Keyword-based fuzzy search filtering.
         * Custom pagination logic that persists search parameters across pages.
 
-## 🛠️ Tech Stack
+### 🛠️ Tech Stack
 
 * **Backend:** Python 3, Django Framework (MVT Architecture)
 * **Frontend:** HTML5, CSS3, JavaScript, Bootstrap 3 (Bootswatch Flatly Theme)
 * **Database:** MySQL (via `pymysql` driver)
 
-## 📸 Screenshots
+### 📸 Screenshots
 1. **Login Interface**
 <img width="1497" height="818" alt="image" src="https://github.com/user-attachments/assets/1bf1a661-493a-4f3c-a2f8-2f2be037b4ec" /> 
 
